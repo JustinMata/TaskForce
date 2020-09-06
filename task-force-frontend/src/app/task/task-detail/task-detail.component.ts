@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Task } from '../../task';
 import { TaskService } from '../../task.service';
-import {timer } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-task-detail',
@@ -11,13 +11,14 @@ import {timer } from 'rxjs';
 export class TaskDetailComponent implements OnInit {
   @Input() tasks$: Task[] = [];
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    timer(0, 1000).subscribe(() => {
-      this.taskService.getTasks().subscribe((tasks) => {
-        this.tasks$ = tasks;
-      })
-    });
+    let term = this.route.snapshot.queryParamMap.get("search");
+    console.log (term);
+    if (term) {
+      this.taskService.searchTask(term).subscribe((task) => {
+        this.tasks$ = task;
+    })}
   }
 }

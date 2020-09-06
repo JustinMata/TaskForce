@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../task.service';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-task-create',
@@ -14,7 +13,7 @@ export class TaskCreateComponent implements OnInit {
     "completed": false,
     "createdOn": "",
     "id": 0,
-    "title": this.title
+    "title": this.title,
   }
 
   constructor(private taskService: TaskService) { 
@@ -30,11 +29,12 @@ export class TaskCreateComponent implements OnInit {
     // console.log(this.title);
     this.taskService.addTask(this.task).subscribe((response) => {
       console.log(`Adding ${this.task.title}`);
-      alert (`${this.task.title} has been added`)
     },
     err => {
       console.log(err);
-    });
+    },
+    () => alert ('Task has been added!'));
+    this.title = ''
   }
 
 }

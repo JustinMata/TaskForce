@@ -4,8 +4,9 @@
     <div class="row">
       <div class="col-xs-12">
         <br>
-        <h3>Task Page Component</h3>
-        <app-task-create></app-task-create>
+        <h3>Task List</h3>
+
+        <!-- <app-task-create></app-task-create>
 
         <h6>Should our "Tasks" Link in the navbar be an <a href="https://ng-bootstrap.github.io/#/components/dropdown/examples">ng-bootstrap Dropdown</a> 
           that says Tasks but has options for: </h6>
@@ -18,17 +19,17 @@
         <h5>Do we want to show the basic task list as a table?</h5>
         <h6>- hardcoded data in the example table below, but I see using a datepicker to populate a formatted Creation Date and a checkbox for Completed</h6>
         <h6>I like the <a href="https://ng-bootstrap.github.io/#/components/table/examples#sortable">ng Bootstrap Sortable Table</a>  as an option...</h6>
-        <h6>Then perhaps we add events for them to get the full details of their task by selecting all or part of the row desired in the table ??? </h6>
+        <h6>Then perhaps we add events for them to get the full details of their task by selecting all or part of the row desired in the table ??? </h6> -->
         <table class="table table-striped">
           <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Title</th>
-            <th scope="col">Creation Date</th>
-            <th scope="col">Completed?</th>
+            <th scope="col" class="numCol">#</th>
+            <th scope="col" class="titleCol">Title</th>
+            <th scope="col" class="otherCol">Creation Date</th>
+            <th scope="col" class="otherCol">Completed?</th>
           </tr>
           </thead>
-          <tbody *ngFor="let task of tasks" [task]="task">
+          <tbody *ngFor="let task of tasks" (click)="onSelect(task)" [task]="task">
           <tr>
             <td>{{ task.id}}</td>
             <td>{{ task.title}}</td>

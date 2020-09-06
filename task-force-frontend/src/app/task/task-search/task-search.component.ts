@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, RouterEvent, NavigationEnd } from '@angular/router';
 import { Task } from '../../task';
 import { TaskService } from '../../task.service';
 
@@ -9,44 +10,44 @@ import { TaskService } from '../../task.service';
 })
 export class TaskSearchComponent implements OnInit {
   task: Task;
-  tasks: Task[] = [];
+  tasks: Task[];
   searchVal = '';
 
-  constructor(private taskService: TaskService) { 
-  
-  }
+  constructor(private taskService: TaskService, public router: Router) { }
 
   ngOnInit(): void {
-  }
-  
-  searchTask() { 
-    let x = 0;
-    let results: any[];
-    console.log(`Searching for ${this.searchVal}`);
-
-    // if (this.searchVal) {
-    this.taskService.getTasks().subscribe((tasks) => {
-        this.tasks = tasks;
-        // console.log(`${this.tasks.length} tasks`);
-        // console.log(results);
-        results = this.filterByValue(this.searchVal);
-        // console.log(results);
-        if (results === undefined || results.length === 0) { 
-          alert(`${this.searchVal} was not found`);
-          this.searchVal = '';
-        } 
-        else console.log(`${results.length} results`);
-      });
-  }
-    
-  filterByValue(myString: String): any[] {
-    let myResults: any[] = [];
-    for (let i = 0; i < this.tasks.length; i++) {
-      // console.log('filtering');
-      if (this.tasks[i].title.toLowerCase().includes(myString.toLowerCase())) {
-        myResults.push(this.tasks[i]);
+    var input = document.getElementById("myInput");
+    input.addEventListener("keyup", function (event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("myBtn").click();
       }
-    }
-    return myResults;
+    });
+    this.router.events.subscribe(e => {
+      if (e instanceof NavigationEnd) {
+        this.searchVal = '';
+      }
+    });
+  }
+
+  searchTask() {
+    this.taskService.searchTask(this.searchVal).subscribe((tasks) => {
+      this.tasks = tasks;
+      console.log(tasks);
+
+
+      if (tasks === undefined || tasks?.length === 0) {
+        alert(`${this.searchVal} was not found`);
+        this.searchVal = '';
+      }
+      else {
+        console.log(`${tasks.length} results`);
+        if (tasks.length == 1) {
+          this.router.navigate(['/', 'taskDetails'], { queryParams: { "search": this.searchVal } });
+        } else if (tasks.length > 1) {
+          this.router.navigate(['/', 'tasks'], { queryParams: { "search": this.searchVal } });
+        }
+      }
+    });
   }
 }

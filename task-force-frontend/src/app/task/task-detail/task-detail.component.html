@@ -1,15 +1,5 @@
 <div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <br>
-      <h3>Task Details Component</h3>
-      <br>
-      <h6>Here is what our task details might look like with cards. The card element documentation can be found
-        <a href="https://getbootstrap.com/docs/4.0/components/card/">here.</a></h6>
-      <br>
-      <div class="row">
-          <app-task-card class="col-auto" *ngFor="let task of tasks$" [task$]="task"></app-task-card>
-      </div>
-    </div>
+  <div class="row-auto">
+      <app-task-card class="col-auto" *ngFor="let task of tasks$" [task$]="task"></app-task-card>
   </div>
 </div>

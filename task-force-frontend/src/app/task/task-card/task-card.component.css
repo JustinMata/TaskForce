@@ -1,0 +1,11 @@
+.completed { 
+    font-size: 20px; 
+    color: green; 
+    font-weight: 500; 
+}
+
+.uncompleted { 
+    font-size: 20px; 
+    color: crimson; 
+    font-weight: 500; 
+}

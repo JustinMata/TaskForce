@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Task } from './task';
 
 // Lisa's IP
@@ -12,6 +12,9 @@ const BASE_URL = 'http://18.217.160.143:8080';
   providedIn: 'root'
 })
 export class TaskService {
+  task: Task;
+  tasks: Task[];
+
 
   constructor(private http: HttpClient) { }
 
@@ -23,7 +26,7 @@ export class TaskService {
       })
     );
   }
-  
+
   deleteTask(id: number): Observable<any> {
     return this.http.delete(`${BASE_URL}/todos/${id}`).pipe(
       catchError((error: any) => {
@@ -50,7 +53,7 @@ export class TaskService {
       })
     );
   }
-  
+
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(`${BASE_URL}/todos`).pipe(
       catchError((error: any) => {
@@ -68,7 +71,7 @@ export class TaskService {
       })
     );
   }
-  
+
   updateTask(task: Task): Observable<Task> {
     return this.http.put<Task>(`${BASE_URL}/todos`, task).pipe(
       catchError((error: any) => {
@@ -76,5 +79,25 @@ export class TaskService {
         return of(null);
       })
     );
+  }
+
+  searchTask(term: string): Observable<Task[]> {
+    let x = 0;
+    return this.getTasks().pipe(
+      map((tasks: Task[]): Task[] => {
+        return this.filterByValue(term, tasks);
+      })
+    );
+  }
+
+  filterByValue(myString: String, tasks: Task[]): Task[] {
+    let myResults: Task[] = [];
+    for (let i = 0; i < tasks.length; i++) {
+  
+      if (tasks[i].title.toLowerCase().includes(myString.toLowerCase())) {
+        myResults.push(tasks[i]);
+      }
+    }
+    return myResults;
   }
 }
