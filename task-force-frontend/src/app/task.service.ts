@@ -5,8 +5,8 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Task } from './task';
 
-// Lisa's IP
-const BASE_URL = 'http://18.217.160.143:8080';
+// Justin's API
+const BASE_URL = 'http://54.215.33.173:8080';
 
 @Injectable({
   providedIn: 'root'

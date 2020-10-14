@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
+import { Task } from '../../task';
 import { TaskService } from '../../task.service';
+import { NotificationsService } from '../../notifications.service';
 
 @Component({
   selector: 'app-task-create',
@@ -7,34 +9,30 @@ import { TaskService } from '../../task.service';
   styleUrls: ['./task-create.component.css']
 })
 export class TaskCreateComponent implements OnInit {
-  title = '';
- 
-  task = {
+  title: string = '';
+  task: Task = {
     "completed": false,
-    "createdOn": "",
+    "createdOn": '',
     "id": 0,
     "title": this.title,
-  }
+  };
 
-  constructor(private taskService: TaskService) { 
+  constructor(private taskService: TaskService, private notificationsService: NotificationsService, private el: ElementRef) { 
   }
 
   ngOnInit(): void {
-    
+    this.el.nativeElement.querySelector('#searchQuery').focus();
   }
 
   updateTitle() {
     this.task.title = this.title;
-    // console.log(this.task);
-    // console.log(this.title);
     this.taskService.addTask(this.task).subscribe((response) => {
-      console.log(`Adding ${this.task.title}`);
     },
     err => {
-      console.log(err);
+      this.notificationsService.showWarning(`There was an error adding Task: <b>"${this.task.title}"</b>`, 'Failure');
     },
-    () => alert ('Task has been added!'));
-    this.title = ''
+    () => this.notificationsService.showSuccess(`The Task: "<b>${this.task.title}"</b> has been added`, 'Success'));
+    this.title = '';
   }
 
 }

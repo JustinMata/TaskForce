@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 import { TaskModule } from './task/task.module';
 
@@ -24,6 +26,20 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      closeButton: true,
+      timeOut: 10000,
+      extendedTimeOut: 5000,
+      easeTime: 500,
+      enableHtml: true,
+      progressBar: true,
+      positionClass: 'toast-bottom-right',
+      tapToDismiss: false,
+      maxOpened: 5,
+      autoDismiss: true,
+      newestOnTop: false,
+    }),
     AppRoutingModule,
     TaskModule,
     HttpClientModule,
