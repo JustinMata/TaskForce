@@ -1,32 +1,38 @@
 <div class="container">
-    <div class="row">
-      <div class="col-xs-6">
-        <br>
-        
-        <h3>What do you want to do?</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <br />
 
-        <br>
-       
-            <ul>
-              <button [routerLink]="['/tasks']" class="btn btn-primary" id="view">View Task List</button>
-              <br><br>
-              <button class="btn btn-primary" (click)="toggleCreate()">Create a New Task</button>
-              <br><br>
-              <button [routerLink]="['/']" class="btn btn-danger" id="deleteAll" (click)="deleteTasks()">Delete All Tasks</button>
-              <br><br>
-            </ul>       
-      </div>
-      <div class="col-xs-6">
-        <ng-container *ngIf="addNew; then new; else blank">
-        </ng-container>
-        <ng-template #new>
-          <app-task-create></app-task-create>
-        </ng-template>
-        <ng-template #blank>
-          
-        </ng-template>
-  
-      </div>
+      <h3>What do you want to do?</h3>
+
+      <br />
+
+      <ul>
+        <button [routerLink]="['/tasks']" class="btn btn-primary" id="view">
+          View Task List
+        </button>
+        <br /><br />
+        <button class="btn btn-primary" (click)="toggleCreate()">
+          Create a New Task
+        </button>
+        <br /><br />
+        <button
+          [routerLink]="['/']"
+          class="btn btn-danger"
+          id="deleteAll"
+          (click)="deleteTasks()"
+        >
+          Delete All Tasks
+        </button>
+        <br /><br />
+      </ul>
     </div>
-  
+    <div class="col-xs-6">
+      <ng-container *ngIf="addNew; then new; else blank"> </ng-container>
+      <ng-template #new>
+        <app-task-create></app-task-create>
+      </ng-template>
+      <ng-template #blank> </ng-template>
+    </div>
+  </div>
 </div>

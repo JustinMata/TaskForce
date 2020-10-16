@@ -1,73 +1,30 @@
-
-
 <div class="container">
-    <div class="row">
-      <div class="col-xs-12">
-        <br>
-        <h3>Task List</h3>
-
-        <!-- <app-task-create></app-task-create>
-
-        <h6>Should our "Tasks" Link in the navbar be an <a href="https://ng-bootstrap.github.io/#/components/dropdown/examples">ng-bootstrap Dropdown</a> 
-          that says Tasks but has options for: </h6>
-          <ul>
-            <li>View Task List</li>
-            <li>Create New Task</li>
-            <li>Edit Task</li>
-          </ul>
-
-        <h5>Do we want to show the basic task list as a table?</h5>
-        <h6>- hardcoded data in the example table below, but I see using a datepicker to populate a formatted Creation Date and a checkbox for Completed</h6>
-        <h6>I like the <a href="https://ng-bootstrap.github.io/#/components/table/examples#sortable">ng Bootstrap Sortable Table</a>  as an option...</h6>
-        <h6>Then perhaps we add events for them to get the full details of their task by selecting all or part of the row desired in the table ??? </h6> -->
-        <table class="table table-striped">
-          <thead>
+  <div class="row">
+    <div class="col-xs-12">
+      <br />
+      <h3>Task List</h3>
+      <table class="table table-striped">
+        <thead>
           <tr>
             <th scope="col" class="numCol">#</th>
             <th scope="col" class="titleCol">Title</th>
             <th scope="col" class="otherCol">Creation Date</th>
             <th scope="col" class="otherCol">Completed?</th>
           </tr>
-          </thead>
-          <tbody *ngFor="let task of tasks" (click)="onSelect(task)" [task]="task">
+        </thead>
+        <tbody
+          *ngFor="let task of tasks"
+          (click)="onSelect(task)"
+          [task]="task"
+        >
           <tr>
-            <td>{{ task.id}}</td>
-            <td>{{ task.title}}</td>
-            <td>{{ task.createdOn}}</td>
+            <td>{{ task.id }}</td>
+            <td>{{ task.title }}</td>
+            <td>{{ task.createdOn }}</td>
             <td>{{ task.completed }}</td>
           </tr>
-          <!-- <tr>
-            <td>2</td>
-            <td>Cut Firewood</td>
-            <td>2020_0818</td>
-            <td>No</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Take OCJA Exam</td>
-            <td>2020_0818</td>
-            <td>No</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Take AWS Exam</td>
-            <td>2020_0818</td>
-            <td>No</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>Task Force Project Work</td>
-            <td>2020_0818</td>
-            <td>No</td>
-          </tr> -->
-          </tbody>
-        </table>
-
-
-        
-  
-  
-      </div>
+        </tbody>
+      </table>
     </div>
-  
   </div>
+</div>

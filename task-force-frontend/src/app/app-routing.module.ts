@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
-import { TaskPageComponent } from './task/task-page/task-page.component';
+import { TaskListComponent } from './task/task-list/task-list.component';
 import { TaskDetailComponent } from './task/task-detail/task-detail.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 
@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'tasks',
-    component: TaskPageComponent
+    component: TaskListComponent
   },
   {
     path: 'taskDetails',

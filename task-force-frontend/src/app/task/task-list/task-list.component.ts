@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+
+import { Observable } from 'rxjs';
+
+import { SortableDirective, SortEvent } from '../../directives/sortable.directive';
 import { TaskService } from '../../task.service';
 import { Task } from '../../task';
 
@@ -9,20 +12,26 @@ import { Task } from '../../task';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-tasks: Task[];
+  tasks$: Observable<Task[]>;
+  total$: Observable<number>;
 
-  constructor(private taskService: TaskService, private route: ActivatedRoute) { }
+  @ViewChildren(SortableDirective) headers: QueryList<SortableDirective>;
+
+  constructor(public taskService: TaskService) { }
 
   ngOnInit(): void {
-    let term = this.route.snapshot.queryParamMap.get("search");
-    console.log (term);
-    if (term) {
-      this.taskService.searchTask(term).subscribe((tasks) => {
-        this.tasks = tasks;
-    })}
-    else this.taskService.getTasks().subscribe((tasks) => {
-      this.tasks = tasks;
-    });
+    this.tasks$ = this.taskService.tasks$;
+    this.total$ = this.taskService.total$;
   }
 
+  onSort({ column, direction }: SortEvent) {
+    this.headers.forEach(header => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+
+    this.taskService.sortColumn = column;
+    this.taskService.sortDirection = direction;
+  }
 }

@@ -1,1 +1,78 @@
-<p>task-list works!</p>
+<form class="ml-2">
+  <div class="form-group form-inline">
+    Search in table:
+    <input
+      class="form-control ml-2"
+      type="text"
+      name="searchTerm"
+      [(ngModel)]="taskService.searchTerm"
+    />
+    <span class="ml-3" *ngIf="taskService.loading$ | async">Loading...</span>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col" sortable="id" direction="asc" (sort)="onSort($event)">
+          #
+        </th>
+        <th scope="col" sortable="title" (sort)="onSort($event)">Title</th>
+        <th scope="col" sortable="createdOn" (sort)="onSort($event)">
+          Created On
+        </th>
+        <th scope="col" sortable="completed" (sort)="onSort($event)">
+          Completed?
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of tasks$ | async">
+        <th scope="row">
+          <ngb-highlight
+            [result]="task.id | number"
+            [term]="taskService.searchTerm"
+          >
+          </ngb-highlight>
+        </th>
+        <td>
+          <ngb-highlight [result]="task.title" [term]="taskService.searchTerm">
+          </ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="task.createdOn"
+            [term]="taskService.searchTerm"
+          >
+          </ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="task.completed"
+            [term]="taskService.searchTerm"
+          >
+          </ngb-highlight>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination
+      [collectionSize]="(total$ | async)!"
+      [(page)]="taskService.page"
+      [pageSize]="taskService.pageSize"
+    >
+    </ngb-pagination>
+
+    <select
+      class="custom-select"
+      style="width: auto"
+      name="pageSize"
+      [(ngModel)]="taskService.pageSize"
+    >
+      <option [ngValue]="5">5 items per page</option>
+      <option [ngValue]="10">10 items per page</option>
+      <option [ngValue]="15">15 items per page</option>
+    </select>
+  </div>
+</form>
