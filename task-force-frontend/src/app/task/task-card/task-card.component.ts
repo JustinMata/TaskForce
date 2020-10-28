@@ -20,7 +20,10 @@ export class TaskCardComponent implements OnInit {
     this.newTitle$ = this.task$.title;
   }
 
-  updateTask() {
+  updateTask(event?: KeyboardEvent) {
+    if (event) {
+      event.preventDefault();
+    }
     if (this.task$.title === this.newTitle$) {
       return;
     }

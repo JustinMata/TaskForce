@@ -7,7 +7,6 @@ import { debounceTime, delay, map, switchMap, tap, catchError } from 'rxjs/opera
 
 import { Task } from './task';
 import { SortColumn, SortDirection } from './directives/sortable.directive';
-import { async } from '@angular/core/testing';
 
 interface SearchResult {
   tasks: Task[];
@@ -45,7 +44,7 @@ function sort(tasks: Task[], column: SortColumn, direction: string): Task[] {
 }
 
 function matches(task: Task, term: string, pipe: PipeTransform) {
-  return task.completed.toString() === term.toLowerCase() || task.createdOn.toLowerCase().includes(term.toLowerCase()) 
+  return task.completed.toString().includes(term.toLowerCase()) || task.createdOn.toLowerCase().includes(term.toLowerCase()) 
   || pipe.transform(task.id).includes(term) 
   || task.title.toLowerCase().includes(term.toLowerCase());
 }
@@ -77,7 +76,6 @@ export class TaskService {
       tap(() => this.loading.next(false))
       ).subscribe(result => {
         this.tasks.next(result.tasks);
-        console.log(result.tasks);
         this.total.next(result.total);
       });
 
@@ -119,6 +117,14 @@ export class TaskService {
     
     tasks = tasks.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
     return { tasks, total };
+  }
+
+  reset(): void {
+    this.page = 1;
+    this.pageSize = 10;
+    this.searchTerm = '';
+    this.sortColumn = '';
+    this.sortDirection = '';
   }
 
   addTask(task: Task): Observable<Task> {

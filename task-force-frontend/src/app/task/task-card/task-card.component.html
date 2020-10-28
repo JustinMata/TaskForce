@@ -12,7 +12,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Title</span>
           </div>
-          <textarea [(ngModel)]="newTitle$" [ngClass]="{'is-valid' : updated$}" [ngModelOptions]="{standalone: true}"
+          <textarea [(ngModel)]="newTitle$" [ngClass]="{'is-valid' : updated$}" [ngModelOptions]="{standalone: true}" (keydown.enter)="updateTask($event)"
             class="form-control completed" style="resize: none;" value="{{ task$.title }}" rows="5"></textarea>
           <div class="valid-feedback">
             Task Successfully Updated!
@@ -43,7 +43,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Title</span>
           </div>
-          <textarea [(ngModel)]="newTitle$" [ngClass]="{'is-valid' : updated$}" [ngModelOptions]="{standalone: true}"
+          <textarea [(ngModel)]="newTitle$" [ngClass]="{'is-valid' : updated$}" [ngModelOptions]="{standalone: true}" (keydown.enter)="updateTask($event)"
             class="form-control uncompleted" style="resize: none;" value="{{ task$.title }}" rows="5"></textarea>
             <div class="valid-feedback">
                 Task Successfully Updated!
